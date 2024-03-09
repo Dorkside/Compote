@@ -7,10 +7,13 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		AC0C42A82B6BCDE7000156BA /* ScriptingBridge.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AC53A5042B6BB39500DBFE08 /* ScriptingBridge.framework */; };
 		AC53A4F52B6BB11300DBFE08 /* CompoteApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC53A4F42B6BB11300DBFE08 /* CompoteApp.swift */; };
 		AC53A4F72B6BB11300DBFE08 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC53A4F62B6BB11300DBFE08 /* ContentView.swift */; };
 		AC53A4F92B6BB11400DBFE08 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AC53A4F82B6BB11400DBFE08 /* Assets.xcassets */; };
 		AC53A4FC2B6BB11400DBFE08 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AC53A4FB2B6BB11400DBFE08 /* Preview Assets.xcassets */; };
+		ACB1E1482B97B351004C8BBF /* NotesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACB1E1472B97B351004C8BBF /* NotesViewModel.swift */; };
+		ACB1E14B2B9C6421004C8BBF /* fetchNotes.scpt in Resources */ = {isa = PBXBuildFile; fileRef = ACB1E14A2B9C6421004C8BBF /* fetchNotes.scpt */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -20,6 +23,9 @@
 		AC53A4F82B6BB11400DBFE08 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		AC53A4FB2B6BB11400DBFE08 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		AC53A4FD2B6BB11400DBFE08 /* Compote.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Compote.entitlements; sourceTree = "<group>"; };
+		AC53A5042B6BB39500DBFE08 /* ScriptingBridge.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ScriptingBridge.framework; path = System/Library/Frameworks/ScriptingBridge.framework; sourceTree = SDKROOT; };
+		ACB1E1472B97B351004C8BBF /* NotesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotesViewModel.swift; sourceTree = "<group>"; };
+		ACB1E14A2B9C6421004C8BBF /* fetchNotes.scpt */ = {isa = PBXFileReference; lastKnownFileType = file; path = fetchNotes.scpt; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -27,6 +33,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AC0C42A82B6BCDE7000156BA /* ScriptingBridge.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -38,6 +45,7 @@
 			children = (
 				AC53A4F32B6BB11300DBFE08 /* Compote */,
 				AC53A4F22B6BB11300DBFE08 /* Products */,
+				AC53A5032B6BB39400DBFE08 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -52,7 +60,9 @@
 		AC53A4F32B6BB11300DBFE08 /* Compote */ = {
 			isa = PBXGroup;
 			children = (
+				ACB1E1492B9C6411004C8BBF /* Scripts */,
 				AC53A4F42B6BB11300DBFE08 /* CompoteApp.swift */,
+				ACB1E1472B97B351004C8BBF /* NotesViewModel.swift */,
 				AC53A4F62B6BB11300DBFE08 /* ContentView.swift */,
 				AC53A4F82B6BB11400DBFE08 /* Assets.xcassets */,
 				AC53A4FD2B6BB11400DBFE08 /* Compote.entitlements */,
@@ -67,6 +77,22 @@
 				AC53A4FB2B6BB11400DBFE08 /* Preview Assets.xcassets */,
 			);
 			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		AC53A5032B6BB39400DBFE08 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				AC53A5042B6BB39500DBFE08 /* ScriptingBridge.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		ACB1E1492B9C6411004C8BBF /* Scripts */ = {
+			isa = PBXGroup;
+			children = (
+				ACB1E14A2B9C6421004C8BBF /* fetchNotes.scpt */,
+			);
+			path = Scripts;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -129,6 +155,7 @@
 			files = (
 				AC53A4FC2B6BB11400DBFE08 /* Preview Assets.xcassets in Resources */,
 				AC53A4F92B6BB11400DBFE08 /* Assets.xcassets in Resources */,
+				ACB1E14B2B9C6421004C8BBF /* fetchNotes.scpt in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -141,6 +168,7 @@
 			files = (
 				AC53A4F72B6BB11300DBFE08 /* ContentView.swift in Sources */,
 				AC53A4F52B6BB11300DBFE08 /* CompoteApp.swift in Sources */,
+				ACB1E1482B97B351004C8BBF /* NotesViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -206,6 +234,7 @@
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = macosx;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_OBJC_BRIDGING_HEADER = "";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
 			name = Debug;
@@ -262,6 +291,7 @@
 				MTL_FAST_MATH = YES;
 				SDKROOT = macosx;
 				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OBJC_BRIDGING_HEADER = "";
 			};
 			name = Release;
 		};
@@ -279,6 +309,7 @@
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSAppleEventsUsageDescription = "Need to access Notes";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -306,6 +337,7 @@
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSAppleEventsUsageDescription = "Need to access Notes";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",

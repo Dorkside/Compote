@@ -14,4 +14,7 @@ struct CompoteApp: App {
             ContentView()
         }
     }
+    
+    init() {
+    }
 }

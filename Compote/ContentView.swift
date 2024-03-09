@@ -8,15 +8,19 @@
 import SwiftUI
 
 struct ContentView: View {
+    @StateObject private var viewModel = NotesViewModel()
+    
     var body: some View {
-        VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundStyle(.tint)
-            Text("Hello, world!")
+            ScrollView {
+                VStack(alignment: .leading) {
+                    ForEach(viewModel.notesContent, id: \.self) { note in
+                        Text(note)
+                            .padding()
+                    }
+                }
+            }
+            .onAppear(perform: viewModel.fetchNotesContent)
         }
-        .padding()
-    }
 }
 
 #Preview {
