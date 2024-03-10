@@ -1,16 +1,6 @@
 import Foundation
 import SwiftUI
 
-extension String {
-    var fourCharCodeValue: FourCharCode {
-        var result: FourCharCode = 0
-        for char in self.utf16 {
-            result = (result << 8) + FourCharCode(char)
-        }
-        return result
-    }
-}
-
 class NotesViewModel: ObservableObject {
     @Published var notesContent: [Note] = []
         
