@@ -13,7 +13,7 @@
 		AC53A4F92B6BB11400DBFE08 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AC53A4F82B6BB11400DBFE08 /* Assets.xcassets */; };
 		AC53A4FC2B6BB11400DBFE08 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AC53A4FB2B6BB11400DBFE08 /* Preview Assets.xcassets */; };
 		ACB1E1482B97B351004C8BBF /* NotesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACB1E1472B97B351004C8BBF /* NotesViewModel.swift */; };
-		ACB1E14B2B9C6421004C8BBF /* fetchNotes.scpt in Resources */ = {isa = PBXBuildFile; fileRef = ACB1E14A2B9C6421004C8BBF /* fetchNotes.scpt */; };
+		ACB1E14B2B9C6421004C8BBF /* FetchNotes.scpt in Resources */ = {isa = PBXBuildFile; fileRef = ACB1E14A2B9C6421004C8BBF /* FetchNotes.scpt */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -25,7 +25,7 @@
 		AC53A4FD2B6BB11400DBFE08 /* Compote.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Compote.entitlements; sourceTree = "<group>"; };
 		AC53A5042B6BB39500DBFE08 /* ScriptingBridge.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ScriptingBridge.framework; path = System/Library/Frameworks/ScriptingBridge.framework; sourceTree = SDKROOT; };
 		ACB1E1472B97B351004C8BBF /* NotesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotesViewModel.swift; sourceTree = "<group>"; };
-		ACB1E14A2B9C6421004C8BBF /* fetchNotes.scpt */ = {isa = PBXFileReference; lastKnownFileType = file; path = fetchNotes.scpt; sourceTree = "<group>"; };
+		ACB1E14A2B9C6421004C8BBF /* FetchNotes.scpt */ = {isa = PBXFileReference; lastKnownFileType = text; path = FetchNotes.scpt; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -90,7 +90,7 @@
 		ACB1E1492B9C6411004C8BBF /* Scripts */ = {
 			isa = PBXGroup;
 			children = (
-				ACB1E14A2B9C6421004C8BBF /* fetchNotes.scpt */,
+				ACB1E14A2B9C6421004C8BBF /* FetchNotes.scpt */,
 			);
 			path = Scripts;
 			sourceTree = "<group>";
@@ -155,7 +155,7 @@
 			files = (
 				AC53A4FC2B6BB11400DBFE08 /* Preview Assets.xcassets in Resources */,
 				AC53A4F92B6BB11400DBFE08 /* Assets.xcassets in Resources */,
-				ACB1E14B2B9C6421004C8BBF /* fetchNotes.scpt in Resources */,
+				ACB1E14B2B9C6421004C8BBF /* FetchNotes.scpt in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
