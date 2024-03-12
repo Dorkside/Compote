@@ -1,12 +1,12 @@
 import SwiftUI
 import AppKit
-
 import UserNotifications
+import PreferencesManager
+import NotificationManager
+import NotesContentFetcher
 
 class AppDelegate: NSObject, NSApplicationDelegate, UNUserNotificationCenterDelegate {
     var statusBarItem: NSStatusItem!
-    var preferencesWindow: NSWindow?
-    var notesContent: [Note] = []
     var syncItem: NSMenuItem?
     
     func applicationDidFinishLaunching(_ notification: Notification) {
@@ -49,29 +49,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, UNUserNotificationCenterDele
     }
     
     @objc func openPreferences() {
-        // Check if we already have a preferences window and bring it to front
-        if let preferencesWindow = preferencesWindow {
-            preferencesWindow.makeKeyAndOrderFront(nil)
-            return
-        }
-        
-        // Create the preferences window and content
-        let preferencesView = PreferencesView()
-        let hostingController = NSHostingController(rootView: preferencesView)
-        let window = NSWindow(contentViewController: hostingController)
-        window.setContentSize(NSSize(width: 400, height: 200))
-        window.center()
-        window.setFrameAutosaveName("Preferences")
-        window.title = "Preferences"
-        window.makeKeyAndOrderFront(nil)
-        self.preferencesWindow = window
-        
-        // Ensure the preferences window is brought to the front and activate the app
-        NSApp.activate(ignoringOtherApps: true)
-        
-        // Optional: Clean up when the window is closed
-        window.isReleasedWhenClosed = false
-        window.delegate = self
+        PreferencesManager.openPreferencesWindow()
     }
     
     @objc func triggerSync() {
@@ -89,63 +67,6 @@ class AppDelegate: NSObject, NSApplicationDelegate, UNUserNotificationCenterDele
         
         // Create a unique identifier for the request.
         let requestIdentifier = UUID().uuidString
-        let request = UNNotificationRequest(identifier: requestIdentifier, content: content, trigger: trigger)
-
-        UNUserNotificationCenter.current().add(request) { error in
-            if let error = error {
-                print("Error scheduling notification: \(error)")
-            } else {
-                print("Notification scheduled!")
-            }
-        }
-    }
-    
-    func userNotificationCenter(_ center: UNUserNotificationCenter,
-        willPresent notification: UNNotification,
-        withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
-        // Display the notification even when the app is in the foreground
-        completionHandler([.sound])
-    }
-    
-    func fetchNotesContent() {
-        self.notesContent.removeAll()
-        
-        self.scheduleNotification(title:"Syncing notes...", body:"", delay:1)
-        self.syncItem?.title = "Syncing notes..."
-        DispatchQueue.main.async {
-            self.syncItem?.isEnabled = false
-        }
-        let lastExecution = UserDefaults.standard.object(forKey: "lastExecution") as? Date
-
-        // Locate the AppleScript file in the bundle
-        guard let scriptFilePath = Bundle.main.path(forResource: "FetchNotes", ofType: "scpt"), let scriptTemplate = try? String(contentsOfFile: scriptFilePath) else {
-            print("Unable to find FetchNotes.scpt")
-            return
-        }
-        
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "dd"
-        var dateString = dateFormatter.string(from: lastExecution ?? Date())
-        var scriptWithArgument = scriptTemplate.replacingOccurrences(of: "/*TARGET_DAY*/", with: dateString)
-        dateFormatter.dateFormat = "MM"
-        dateString = dateFormatter.string(from: lastExecution ?? Date())
-        scriptWithArgument = scriptWithArgument.replacingOccurrences(of: "/*TARGET_MONTH*/", with: dateString)
-        dateFormatter.dateFormat = "yyyy"
-        dateString = dateFormatter.string(from: lastExecution ?? Date())
-        scriptWithArgument = scriptWithArgument.replacingOccurrences(of: "/*TARGET_YEAR*/", with: dateString)
-        
-        do {
-            var error: NSDictionary?
-            if let scriptObject = NSAppleScript(source: scriptWithArgument) {
-                let output = scriptObject.executeAndReturnError(&error)
-                if error == nil {
-                    // Process the script output as before
-                    if output.descriptorType != typeNull {
-                        guard let listDescriptor = output.coerce(toDescriptorType: typeAEList) else {
-                            print("Output is not a list")
-                            return
-                        }
-                        
                         for i in 1...listDescriptor.numberOfItems {
                             guard let recordDescriptor = listDescriptor.atIndex(i) else { continue }
                             
