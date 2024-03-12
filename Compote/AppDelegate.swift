@@ -1,6 +1,6 @@
 import SwiftUI
 import AppKit
-
+import Compote/PreferencesManager
 import UserNotifications
 
 class AppDelegate: NSObject, NSApplicationDelegate, UNUserNotificationCenterDelegate {
@@ -49,27 +49,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, UNUserNotificationCenterDele
     }
     
     @objc func openPreferences() {
-        // Check if we already have a preferences window and bring it to front
-        if let preferencesWindow = preferencesWindow {
-            preferencesWindow.makeKeyAndOrderFront(nil)
-            return
-        }
-        
-        // Create the preferences window and content
-        let preferencesView = PreferencesView()
-        let hostingController = NSHostingController(rootView: preferencesView)
-        let window = NSWindow(contentViewController: hostingController)
-        window.setFrameAutosaveName("Preferences")
-        window.title = "Preferences"
-        window.makeKeyAndOrderFront(nil)
-        self.preferencesWindow = window
-        
-        // Ensure the preferences window is brought to the front and activate the app
-        NSApp.activate(ignoringOtherApps: true)
-        
-        // Optional: Clean up when the window is closed
-        window.isReleasedWhenClosed = false
-        window.delegate = self
+        PreferencesManager.openPreferencesWindow(preferencesWindow: &self.preferencesWindow)
     }
     
     @objc func triggerSync() {
