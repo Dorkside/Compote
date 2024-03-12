@@ -1,6 +1,7 @@
 import SwiftUI
 import AppKit
 import Compote/PreferencesManager
+import Compote/NotificationManager
 import UserNotifications
 
 class AppDelegate: NSObject, NSApplicationDelegate, UNUserNotificationCenterDelegate {
@@ -56,35 +57,8 @@ class AppDelegate: NSObject, NSApplicationDelegate, UNUserNotificationCenterDele
         self.fetchNotesContent()
     }
     
-    func scheduleNotification(title: String, body: String, delay: Double) {
-        let content = UNMutableNotificationContent()
-        content.title = title
-        content.body = body
-        content.sound = UNNotificationSound.default
-
-        // Deliver the notification in five seconds.
-        let trigger = UNTimeIntervalNotificationTrigger(timeInterval: delay, repeats: false)
-        
-        // Create a unique identifier for the request.
-        let requestIdentifier = UUID().uuidString
-        let request = UNNotificationRequest(identifier: requestIdentifier, content: content, trigger: trigger)
-
-        UNUserNotificationCenter.current().add(request) { error in
-            if let error = error {
-                print("Error scheduling notification: \(error)")
-            } else {
-                print("Notification scheduled!")
-            }
-        }
-    }
     
     func userNotificationCenter(_ center: UNUserNotificationCenter,
-        willPresent notification: UNNotification,
-        withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
-        // Display the notification even when the app is in the foreground
-        completionHandler([.sound])
-    }
-    
     func fetchNotesContent() {
         self.notesContent.removeAll()
         
@@ -166,7 +140,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, UNUserNotificationCenterDele
 
                             DispatchQueue.main.asyncAfter(deadline: .now() + 5) {
                                 self.notesContent.append(note)
-                                self.scheduleNotification(title:"Sync done", body:"Successfully synced " + self.notesContent.count.codingKey.stringValue + " notes", delay:1)
+                                NotificationManager.scheduleNotification(title:"Sync done", body:"Successfully synced " + String(self.notesContent.count) + " notes", delay:1)
                                 
                                 self.syncItem?.title = "Sync"
                                 DispatchQueue.main.async {
@@ -186,6 +160,9 @@ class AppDelegate: NSObject, NSApplicationDelegate, UNUserNotificationCenterDele
         } catch {
             print("Failed to load AppleScript from file with error: \(error)")
         }
+    }
+    func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
+        NotificationManager.userNotificationCenter(center: center, willPresent: notification, withCompletionHandler: completionHandler)
     }
 }
 
