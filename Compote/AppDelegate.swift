@@ -22,10 +22,10 @@ class AppDelegate: NSObject, NSApplicationDelegate, UNUserNotificationCenterDele
         let statusBar = NSStatusBar.system
         statusBarItem = statusBar.statusItem(withLength: NSStatusItem.variableLength)
         if let statusBarButton = statusBarItem.button {
-            statusBarButton.image = NSImage(systemSymbolName: "note.text", accessibilityDescription: "Notes")
+            statusBarButton.image = NSImage(systemSymbolName: "note.text", accessibilityDescription: "Compote")
         }
         
-        let statusBarMenu = NSMenu(title: "Status Bar Menu")
+        let statusBarMenu = NSMenu(title: "Compote Menu")
         statusBarMenu.autoenablesItems = false
         statusBarItem.menu = statusBarMenu
         
@@ -59,8 +59,6 @@ class AppDelegate: NSObject, NSApplicationDelegate, UNUserNotificationCenterDele
         let preferencesView = PreferencesView()
         let hostingController = NSHostingController(rootView: preferencesView)
         let window = NSWindow(contentViewController: hostingController)
-        window.setContentSize(NSSize(width: 400, height: 200))
-        window.center()
         window.setFrameAutosaveName("Preferences")
         window.title = "Preferences"
         window.makeKeyAndOrderFront(nil)
