@@ -2,6 +2,7 @@ import SwiftUI
 import AppKit
 import Compote/PreferencesManager
 import Compote/NotificationManager
+import Compote/NoteSyncManager
 import UserNotifications
 
 class AppDelegate: NSObject, NSApplicationDelegate, UNUserNotificationCenterDelegate {
@@ -54,46 +55,11 @@ class AppDelegate: NSObject, NSApplicationDelegate, UNUserNotificationCenterDele
     }
     
     @objc func triggerSync() {
-        self.fetchNotesContent()
+        NoteSyncManager.fetchNotesContent(notesContent: &self.notesContent, syncItem: self.syncItem)
     }
     
     
     func userNotificationCenter(_ center: UNUserNotificationCenter,
-    func fetchNotesContent() {
-        self.notesContent.removeAll()
-        
-        self.scheduleNotification(title:"Syncing notes...", body:"", delay:1)
-        self.syncItem?.title = "Syncing notes..."
-        DispatchQueue.main.async {
-            self.syncItem?.isEnabled = false
-        }
-        let lastExecution = UserDefaults.standard.object(forKey: "lastExecution") as? Date
-
-        // Locate the AppleScript file in the bundle
-        guard let scriptFilePath = Bundle.main.path(forResource: "FetchNotes", ofType: "scpt"), let scriptTemplate = try? String(contentsOfFile: scriptFilePath) else {
-            print("Unable to find FetchNotes.scpt")
-            return
-        }
-        
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "dd"
-        var dateString = dateFormatter.string(from: lastExecution ?? Date())
-        var scriptWithArgument = scriptTemplate.replacingOccurrences(of: "/*TARGET_DAY*/", with: dateString)
-        dateFormatter.dateFormat = "MM"
-        dateString = dateFormatter.string(from: lastExecution ?? Date())
-        scriptWithArgument = scriptWithArgument.replacingOccurrences(of: "/*TARGET_MONTH*/", with: dateString)
-        dateFormatter.dateFormat = "yyyy"
-        dateString = dateFormatter.string(from: lastExecution ?? Date())
-        scriptWithArgument = scriptWithArgument.replacingOccurrences(of: "/*TARGET_YEAR*/", with: dateString)
-        
-        do {
-            var error: NSDictionary?
-            if let scriptObject = NSAppleScript(source: scriptWithArgument) {
-                let output = scriptObject.executeAndReturnError(&error)
-                if error == nil {
-                    // Process the script output as before
-                    if output.descriptorType != typeNull {
-                        guard let listDescriptor = output.coerce(toDescriptorType: typeAEList) else {
                             print("Output is not a list")
                             return
                         }
